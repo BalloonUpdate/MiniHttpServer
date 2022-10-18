@@ -1,0 +1,8 @@
+# 修改监听端口
+port: 1800
+
+# 加载jks格式证书文件，默认请留空
+jks-certificate-file:
+
+# jks格式证书密钥，默认请留空
+jks-certificate-pass: 
