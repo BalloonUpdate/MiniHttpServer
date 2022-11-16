@@ -44,6 +44,8 @@ class MiniHttpServer
 
             config = AppConfig(
                 port = configYaml["port"]?.run { this as Int } ?: 8850,
+                serve = configYaml["serve"]?.run { this as String } ?: "public",
+                home = configYaml["home"]?.run { this as String } ?: "404.html",
                 certificateFile = configYaml["jks-certificate-file"]?.run { this as String } ?: "",
                 certificatePass = configYaml["jks-certificate-pass"]?.run { this as String } ?: "",
             )
@@ -51,10 +53,7 @@ class MiniHttpServer
             exitWithError("配置文件读取出错(格式不正确)，可能的位置和原因: ${e.cause?.message}")
         }
 
-        val publidDir = File(workdir, "public")
-
-        if (!(File(publidDir, "current-version.txt")).exists())
-            exitWithError("找不到public/current-version.txt，启动失败，请检查此文件是否存在")
+        val publidDir = File(workdir, config.serve)
 
         try {
             server = Server(publidDir, config.port)
@@ -68,7 +67,7 @@ class MiniHttpServer
             server.start(NanoHTTPD.SOCKET_READ_TIMEOUT, false)
 
             println("Listening on: ${config.port}")
-            println("API地址: http://localhost:${config.port}/current-version.txt")
+            println("API地址: http://localhost:${config.port}")
 
             println()
             println("使用提示1：显示的所有报错信息都不用管，直接忽略就好！")

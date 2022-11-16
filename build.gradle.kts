@@ -37,5 +37,10 @@ tasks.withType<ShadowJar> {
         attributes("Main-Class" to "MiniHttpServer")
     }
 
+    // 打包源代码
+    sourceSets.main.get().allSource.sourceDirectories.map {
+        from(it) {into("sources/"+it.name) }
+    }
+
     archiveClassifier.set("")
 }

@@ -1,5 +1,8 @@
 # 修改监听端口
-port: 1800
+port: 6600
+
+# 服务目录
+serve: public
 
 # 加载jks格式证书文件，默认请留空
 jks-certificate-file:
